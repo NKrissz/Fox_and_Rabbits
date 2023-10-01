@@ -16,8 +16,9 @@ namespace Fox_And_Rabbits
         {
             int row = int.Parse(tb_rows.Text);
             int col = int.Parse(tb_cols.Text);
+            Random rnd = new Random();
 
-            int tileSize = 50;
+            int tileSize = 15; //size in pixel
 
 
             for (int x = 0; x < row; x++)
@@ -28,15 +29,36 @@ namespace Fox_And_Rabbits
                     {
                         Size = new Size(tileSize, tileSize),
                         Location = new Point(x * tileSize, y * tileSize),
-                        BackColor = (x + y) % 2 == 0 ? Color.White : Color.Black
                     };
+
+                    switch (rnd.Next(1, 101))
+                    {
+                        case int n when (n >= 1 && n <= 29):
+                            tile.BackColor = Color.LightGreen;
+                            break;
+                        case int n when (n >= 30 && n <= 59):
+                            tile.BackColor = Color.Green;
+                            break;
+                        case int n when (n >= 60 && n <= 84):
+                            tile.BackColor = Color.DarkGreen;
+                            break;
+                        case int n when (n >= 85 && n <= 94):
+                            tile.BackColor = Color.DarkSlateGray;
+                            break;
+                        case int n when (n >= 95 && n <= 100):
+                            tile.BackColor = Color.Red;
+                            break;
+                        default:
+                            tile.BackColor = Color.RosyBrown;
+                            break;
+                    }
 
                     Controls.Add(tile);
                 }
             }
 
 
-            Size = new Size((row * tileSize) + 100, (col * tileSize) + 100);
+            Size = new Size((row * tileSize), (col * tileSize) + 40);
 
         }
         private void Form1_Load(object sender, EventArgs e)
