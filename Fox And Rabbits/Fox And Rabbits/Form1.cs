@@ -2,19 +2,27 @@ namespace Fox_And_Rabbits
 {
     public partial class Form1 : Form
     {
-        private const int gridSize = 10;
-        private const int tileSize = 50; // Size of each tile in pixels
+
+
         public Form1()
         {
             InitializeComponent();
-            InitializeGrid();
+
+
+
         }
 
         private void InitializeGrid()
         {
-            for (int x = 0; x < gridSize; x++)
+            int row = int.Parse(tb_rows.Text);
+            int col = int.Parse(tb_cols.Text);
+
+            int tileSize = 50;
+
+
+            for (int x = 0; x < row; x++)
             {
-                for (int y = 0; y < gridSize; y++)
+                for (int y = 0; y < col; y++)
                 {
                     var tile = new Panel
                     {
@@ -26,10 +34,27 @@ namespace Fox_And_Rabbits
                     Controls.Add(tile);
                 }
             }
-        }
-            private void Form1_Load(object sender, EventArgs e)
-            {
 
-            }
+
+            Size = new Size((row * tileSize) + 100, (col * tileSize) + 100);
+
+        }
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            InitializeGrid();
+            label1.Visible = false;
+            label2.Visible = false;
+            label3.Visible = false;
+            tb_cols.Visible = false;
+            tb_rows.Visible = false;
+            bt_generate.Visible = false;
+
         }
     }
+}
