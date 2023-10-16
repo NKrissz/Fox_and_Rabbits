@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Fox_And_Rabbits.Animals;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Fox_And_Rabbits.Grass
 {
-    internal class GrassHandler
+    internal class GrassHandler : Entity
     {
-        public GrassHandler(int nutritionValue, Color grassColor)
+        public GrassHandler(int nutritionValue, Color entityColor)
         {
             NutritionValue = nutritionValue;
-            GrassColor = grassColor;
+            EntityColor = entityColor;
         }
         enum GrassTypes
         {
@@ -24,7 +25,7 @@ namespace Fox_And_Rabbits.Grass
 
 
         public int NutritionValue { get; init; }
-        public Color GrassColor { get; init; }
+        public Color EntityColor { get; init; }
 
     }
 }

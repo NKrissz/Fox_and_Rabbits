@@ -35,6 +35,7 @@
             label2 = new Label();
             label3 = new Label();
             pictureBox1 = new PictureBox();
+            label4 = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -105,12 +106,23 @@
             pictureBox1.TabIndex = 6;
             pictureBox1.TabStop = false;
             // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.ForeColor = SystemColors.ButtonFace;
+            label4.Location = new Point(514, 118);
+            label4.Name = "label4";
+            label4.Size = new Size(38, 15);
+            label4.TabIndex = 7;
+            label4.Text = "label4";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(0, 0, 64);
             ClientSize = new Size(1098, 690);
+            Controls.Add(label4);
             Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(label1);
@@ -135,5 +147,6 @@
         private Label label2;
         private Label label3;
         private PictureBox pictureBox1;
+        private Label label4;
     }
 }

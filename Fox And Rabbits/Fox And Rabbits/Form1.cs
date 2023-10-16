@@ -22,17 +22,18 @@ namespace Fox_And_Rabbits
 
             Simulation sim = new(int.Parse(tb_rows.Text), int.Parse(tb_cols.Text), 15);
 
-
-            sim.StartGame(out Bitmap bitmap);
-
-
             label1.Visible = false;
             label2.Visible = false;
             label3.Visible = false;
             tb_cols.Visible = false;
             tb_rows.Visible = false;
             bt_generate.Visible = false;
+            
 
+            sim.StartGame(out Bitmap bitmap);
+
+            label4.Text = sim.RabbitCounter().ToString();
+            
 
             // Calculate the required size for the PictureBox based on the content
             int pictureBoxWidth = sim.X * sim.CellSize;
@@ -51,7 +52,11 @@ namespace Fox_And_Rabbits
 
 
             // Display the bitmap in the PictureBox
-            pictureBox1.Image = bitmap;
+            
+           
+                sim.PassageOfTime(bitmap);
+                pictureBox1.Image = bitmap;
+
         }
     }
 }

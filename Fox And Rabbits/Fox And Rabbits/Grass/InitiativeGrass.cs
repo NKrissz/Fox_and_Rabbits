@@ -8,10 +8,10 @@ namespace Fox_And_Rabbits.Grass
 {
     internal class InitiativeGrass : GrassHandler
     {
-        public InitiativeGrass(int nutritionValue, Color grassColor) : base(nutritionValue, grassColor)
+        public InitiativeGrass(int nutritionValue, Color entityColor) : base(nutritionValue, entityColor)
         {
             NutritionValue = nutritionValue;
-            GrassColor = grassColor;
+            EntityColor = entityColor;
         }
     }
 }

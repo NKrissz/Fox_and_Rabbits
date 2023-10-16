@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace Fox_And_Rabbits.Animals
 {
-    internal class Animal
+    internal class Animal : Entity
     {
-        public Animal(int saturation, bool ate, bool bred, Color animalColor)
+        public Animal(int saturation, bool ate, bool bred, Color entityColor)
         {
             Saturation = saturation;
             Ate = ate;
             Bred = bred;
-            AnimalColor = animalColor;
+            EntityColor = entityColor;
         }
 
        
@@ -22,9 +22,6 @@ namespace Fox_And_Rabbits.Animals
         public int Saturation { get; init; }
         public bool Ate { get; init; } = false;
         public bool Bred { get; init; } = false;
-        public Color AnimalColor { get; init; }
-
-
-
+        public Color EntityColor { get; init; }
     }
 }
