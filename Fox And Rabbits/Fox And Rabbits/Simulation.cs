@@ -100,7 +100,7 @@ namespace Fox_And_Rabbits
                         {
                             Grid[i, j] = new TenderGrass(1, Color.Green);
                         }
-                        if (Grid[i, j].GetType() == typeof(TenderGrass))
+                        else if (Grid[i, j].GetType() == typeof(TenderGrass))
                         {
                             Grid[i, j] = new AdvancedGrass(2, Color.DarkGreen);
                         }
@@ -108,6 +108,7 @@ namespace Fox_And_Rabbits
                 }
             UpdateGrid(bitmap);
         }
+
         public void UpdateGrid(Bitmap bitmap)
         {
             Graphics graphics = Graphics.FromImage(bitmap);
