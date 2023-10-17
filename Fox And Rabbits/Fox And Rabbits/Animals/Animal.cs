@@ -16,7 +16,7 @@ namespace Fox_And_Rabbits.Animals
             EntityColor = entityColor;
         }
 
-       
+       public Animal() { }
 
 
         public int Saturation { get; init; }

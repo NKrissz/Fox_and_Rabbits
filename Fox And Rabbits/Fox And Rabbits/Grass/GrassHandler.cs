@@ -23,7 +23,6 @@ namespace Fox_And_Rabbits.Grass
         }
 
 
-
         public int NutritionValue { get; init; }
         public Color EntityColor { get; init; }
 

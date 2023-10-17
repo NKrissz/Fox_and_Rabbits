@@ -17,7 +17,7 @@ namespace Fox_And_Rabbits
 
         Bitmap GenerateBitmap();
 
-        
+
 
     }
 }

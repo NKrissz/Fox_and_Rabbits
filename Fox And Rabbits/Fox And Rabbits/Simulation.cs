@@ -91,6 +91,7 @@ namespace Fox_And_Rabbits
         }
         public void PassageOfTime(Bitmap bitmap)
         {
+            Rabbit rabbit = new Rabbit();
  
                 for (int i = 0; i < Grid.GetLength(0); i++)
                 {
@@ -104,7 +105,12 @@ namespace Fox_And_Rabbits
                         {
                             Grid[i, j] = new AdvancedGrass(2, Color.DarkGreen);
                         }
-                    }
+                        else if(Grid[i, j].GetType() == typeof(Rabbit))
+                        {
+
+                            rabbit.RabbitMove(Grid);
+                        }
+                }
                 }
             UpdateGrid(bitmap);
         }

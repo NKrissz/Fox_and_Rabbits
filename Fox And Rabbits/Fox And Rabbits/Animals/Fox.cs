@@ -16,6 +16,7 @@ namespace Fox_And_Rabbits.Animals
             Bred = bred;
             EntityColor = entityColor;
         }
+        public Fox() { }
 
   
     }
