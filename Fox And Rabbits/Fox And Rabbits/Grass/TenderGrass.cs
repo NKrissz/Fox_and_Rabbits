@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Fox_And_Rabbits.Grass.Grass
+﻿namespace Fox_And_Rabbits.Grass.Grass
 {
     internal class TenderGrass : GrassHandler
     {

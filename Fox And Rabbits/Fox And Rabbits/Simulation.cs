@@ -1,7 +1,6 @@
 ﻿using Fox_And_Rabbits.Animals;
 using Fox_And_Rabbits.Grass;
 using Fox_And_Rabbits.Grass.Grass;
-using System.Drawing;
 
 namespace Fox_And_Rabbits
 {
@@ -10,24 +9,22 @@ namespace Fox_And_Rabbits
         public int X { get; init; }
         public int Y { get; init; }
         public int CellSize { get; init; }
-        public Entity[,] Grid { get; init; }
+        public IEntity[,] Grid { get; init; }
+
 
         public Simulation(int x, int y, int cellSize)
         {
             X = x;
             Y = y;
             CellSize = cellSize;
-            Grid = new Entity[x, y];
+            Grid = new IEntity[x, y];
         }
-
 
 
         public Bitmap GenerateBitmap()
         {
             return new Bitmap(X * CellSize, Y * CellSize);
-
         }
-
 
 
         public void StartGame(out Bitmap bitmapHandler)
@@ -47,7 +44,7 @@ namespace Fox_And_Rabbits
                     {
                         case int n when (n >= 1 && n <= 28):
                             Grid[i, j] = new InitiativeGrass(0, Color.LightGreen);
-                            cellColor = Grid[i,j].EntityColor;
+                            cellColor = Grid[i, j].EntityColor;
                             break;
                         case int n when (n >= 29 && n <= 56):
                             Grid[i, j] = new TenderGrass(1, Color.Green);
@@ -89,46 +86,51 @@ namespace Fox_And_Rabbits
             }
             return rabbit;
         }
+
+
+
         public void PassageOfTime(Bitmap bitmap)
         {
-            Rabbit rabbit = new Rabbit();
- 
-                for (int i = 0; i < Grid.GetLength(0); i++)
+            for (int i = 0; i < Grid.GetLength(0); i++)
+            {
+                for (int j = 0; j < Grid.GetLength(1); j++)
                 {
-                    for (int j = 0; j < Grid.GetLength(1);j++)
+                    if (Grid[i, j] is InitiativeGrass)
                     {
-                        if (Grid[i,j].GetType() == typeof(InitiativeGrass))
-                        {
-                            Grid[i, j] = new TenderGrass(1, Color.Green);
-                        }
-                        else if (Grid[i, j].GetType() == typeof(TenderGrass))
-                        {
-                            Grid[i, j] = new AdvancedGrass(2, Color.DarkGreen);
-                        }
-                        else if(Grid[i, j].GetType() == typeof(Rabbit))
-                        {
+                        Grid[i, j] = new TenderGrass(1, Color.Green);
+                    }
+                    else if (Grid[i, j] is TenderGrass)
+                    {
+                        Grid[i, j] = new AdvancedGrass(2, Color.DarkGreen);
+                    }
+                    else if (Grid[i, j] is Rabbit)
+                    {
 
-                            rabbit.RabbitMove(Grid);
-                        }
+                       
+                    }
+                    else if (Grid[i, j] is Fox)
+                    {
+
+                        
+                    }
                 }
-                }
+            }
+
             UpdateGrid(bitmap);
         }
 
         public void UpdateGrid(Bitmap bitmap)
         {
             Graphics graphics = Graphics.FromImage(bitmap);
-            Color cellColor = new();
             for (int i = 0; i < Grid.GetLength(0); i++)
             {
                 for (int j = 0; j < Grid.GetLength(1); j++)
                 {
-
-                    cellColor = Grid[i, j].EntityColor;
+                    Color cellColor = Grid[i, j].EntityColor;
                     SolidBrush brush = new(cellColor);
                     graphics.FillRectangle(brush, j * CellSize, i * CellSize, CellSize, CellSize);
                 }
-            } 
+            }
         }
 
 
