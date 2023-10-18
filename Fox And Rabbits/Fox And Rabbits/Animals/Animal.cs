@@ -10,12 +10,12 @@
             EntityColor = entityColor;
         }
 
-       public Animal() { }
+        public Animal() { }
 
 
-        public int Saturation { get; init; }
+        public int Saturation { get; set; }
         public bool Ate { get; init; } = false;
-        public bool Bred { get; init; } = false;
+        public bool Bred { get; set; }
         public Color EntityColor { get; init; }
     }
 }

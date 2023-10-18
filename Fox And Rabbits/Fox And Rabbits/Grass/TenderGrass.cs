@@ -2,10 +2,10 @@
 {
     internal class TenderGrass : GrassHandler
     {
-        public TenderGrass(int nutritionValue, Color entityColor) : base(nutritionValue, entityColor)
+        public TenderGrass() : base()
         {
-            NutritionValue = nutritionValue;
-            EntityColor = entityColor;
+            NutritionValue = 1;
+            EntityColor = Color.Green;
         }
     }
 }

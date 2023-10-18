@@ -3,10 +3,8 @@ namespace Fox_And_Rabbits.Grass
 {
     internal class GrassHandler : IEntity
     {
-        public GrassHandler(int nutritionValue, Color entityColor)
+        public GrassHandler()
         {
-            NutritionValue = nutritionValue;
-            EntityColor = entityColor;
         }
         enum GrassTypes
         {
@@ -15,7 +13,6 @@ namespace Fox_And_Rabbits.Grass
             AdvancedGrass
 
         }
-
 
         public int NutritionValue { get; init; }
         public Color EntityColor { get; init; }

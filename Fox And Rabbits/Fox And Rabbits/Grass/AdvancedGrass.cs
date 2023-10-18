@@ -2,10 +2,10 @@
 {
     internal class AdvancedGrass : GrassHandler
     {
-        public AdvancedGrass(int nutritionValue, Color entityColor) : base(nutritionValue, entityColor)
+        public AdvancedGrass() : base()
         {
-            NutritionValue = nutritionValue;
-            EntityColor = entityColor;
+            NutritionValue = 2;
+            EntityColor = Color.DarkGreen;
         }
     }
 }

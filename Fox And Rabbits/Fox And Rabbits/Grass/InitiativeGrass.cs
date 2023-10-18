@@ -2,10 +2,10 @@
 {
     internal class InitiativeGrass : GrassHandler
     {
-        public InitiativeGrass(int nutritionValue, Color entityColor) : base(nutritionValue, entityColor)
+        public InitiativeGrass() : base()
         {
-            NutritionValue = nutritionValue;
-            EntityColor = entityColor;
+            NutritionValue = 0;
+            EntityColor = Color.LightGreen;
         }
     }
 }

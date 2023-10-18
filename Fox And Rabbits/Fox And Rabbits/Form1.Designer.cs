@@ -37,6 +37,7 @@
             pictureBox1 = new PictureBox();
             lbl_RabbitCount = new Label();
             btn_Exit = new Button();
+            lbl_rounds = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -137,12 +138,26 @@
             btn_Exit.UseVisualStyleBackColor = true;
             btn_Exit.Click += Btn_Exit_Click;
             // 
+            // lbl_rounds
+            // 
+            lbl_rounds.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            lbl_rounds.AutoSize = true;
+            lbl_rounds.ForeColor = SystemColors.ButtonFace;
+            lbl_rounds.Location = new Point(941, 58);
+            lbl_rounds.Name = "lbl_rounds";
+            lbl_rounds.Size = new Size(77, 15);
+            lbl_rounds.TabIndex = 8;
+            lbl_rounds.Text = "Körök száma:";
+            lbl_rounds.Visible = false;
+            lbl_rounds.Click += label4_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(0, 0, 64);
             ClientSize = new Size(1167, 810);
+            Controls.Add(lbl_rounds);
             Controls.Add(lbl_RabbitCount);
             Controls.Add(label3);
             Controls.Add(label2);
@@ -172,5 +187,6 @@
         private PictureBox pictureBox1;
         private Label lbl_RabbitCount;
         private Button btn_Exit;
+        private Label lbl_rounds;
     }
 }

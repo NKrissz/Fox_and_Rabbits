@@ -11,7 +11,7 @@ namespace Fox_And_Rabbits
 
         }
 
-        private void Btn_generate_Click(object sender, EventArgs e)
+        private async void Btn_generate_Click(object sender, EventArgs e)
         {
             WindowState = FormWindowState.Maximized;
 
@@ -32,32 +32,42 @@ namespace Fox_And_Rabbits
 
             // Set the PictureBox's location to center it on the form
             pictureBox1.Location = new Point(centerX, centerY);
-
-
-
-            pictureBox1.Image = bitmap;
-
-            sim.PassageOfTime(bitmap);
-
-            pictureBox1.Image = bitmap;
-
-
-
             label1.Visible = false;
             label2.Visible = false;
             label3.Visible = false;
             tb_cols.Visible = false;
             tb_rows.Visible = false;
             bt_generate.Visible = false;
+            lbl_rounds.Visible = true;
 
 
             lbl_RabbitCount.Visible = true;
-            lbl_RabbitCount.Text = $"A nyuak száma: {sim.RabbitCounter()}";
+            int rounds = 0;
+            while (sim.RabbitCounter() != 0)
+            {
+                pictureBox1.Image = bitmap;
+                await Task.Delay(50);
+                sim.PassageOfTime(bitmap);
+
+                pictureBox1.Image = bitmap;
+                rounds++;
+                lbl_rounds.Text = $"Eltelt körök: {rounds}";
+                lbl_RabbitCount.Text = $"A nyulak száma: {sim.RabbitCounter()}";
+            }
+
+
+
+
         }
 
         private void Btn_Exit_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
