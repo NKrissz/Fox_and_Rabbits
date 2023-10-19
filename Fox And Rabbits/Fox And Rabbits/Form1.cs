@@ -74,7 +74,7 @@ namespace Fox_And_Rabbits
                 }
                 sim.UpdateGrid(bitmap);
                 pictureBox1.Image = bitmap;
-                await Task.Delay(1000);
+                await Task.Delay(400);
 
                 sim.ResetStats();
 

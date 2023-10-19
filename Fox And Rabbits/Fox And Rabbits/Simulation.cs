@@ -65,7 +65,7 @@ namespace Fox_And_Rabbits
 
             int randX;
             int randY;
-            for (int i = 0; i < 120; i++)
+            for (int i = 0; i < 140; i++)
             {
                 randX = rnd.Next(0, X);
                 randY = rnd.Next(0, Y);
@@ -76,7 +76,7 @@ namespace Fox_And_Rabbits
                 graphics.FillRectangle(brush, randX * CellSize, randX * CellSize, CellSize, CellSize);
 
             }
-            for (int i = 0; i < 40; i++)
+            for (int i = 0; i < 30; i++)
             {
                 randX = rnd.Next(0, X);
                 randY = rnd.Next(0, Y);
@@ -278,14 +278,46 @@ namespace Fox_And_Rabbits
         {
             if (Grid[x, y] is Rabbit rabbit)
             {
+                List<string> rabbitCoordinates = ReturnNeighbourCoordinates(x, y, typeof(Rabbit), 1);
+                if (!rabbit.Bred && rabbitCoordinates.Count == 1)
+                {
+
+                    for (int i = 0; i < rabbitCoordinates.Count; i++)
+                    {
+                        string[] splitted = RandomCoordinateFromList(rabbitCoordinates);
+                        int rabbitPairX = int.Parse(splitted[0]);
+                        int rabbitPairY = int.Parse(splitted[1]);
+
+                        Rabbit rabbitPair = (Rabbit)Grid[rabbitPairX, rabbitPairY];
+
+                        if (!rabbitPair.Bred)
+                        {
+                            int newRabbitX;
+                            int newRabbitY;
+                            do
+                            {
+                                newRabbitX = rnd.Next(0, X);
+                                newRabbitY = rnd.Next(0, Y);
+                            } while (Grid[newRabbitX, newRabbitY] is Rabbit || Grid[newRabbitX, newRabbitY] is Fox);
+
+                            Grid[newRabbitX, newRabbitY] = new Rabbit(5, true, true, Color.DarkSlateGray);
+
+
+                            break;
+                        }
+
+                    }
+
+                }
                 if (!rabbit.Ate)
                 {
 
                     List<string> advancedGrassCoordinates = ReturnNeighbourCoordinates(x, y, typeof(AdvancedGrass), 1);
                     List<string> tenderGrassCoordinates = ReturnNeighbourCoordinates(x, y, typeof(TenderGrass), 1);
                     List<string> initiativeGrassCoordinates = ReturnNeighbourCoordinates(x, y, typeof(InitiativeGrass), 1);
-                    List<string> rabbitCoordinates = ReturnNeighbourCoordinates(x, y, typeof(Rabbit), 1);
+                    
 
+                   
 
                     if (advancedGrassCoordinates.Count != 0)
                     {
@@ -342,36 +374,7 @@ namespace Fox_And_Rabbits
                         Grid[x, y] = new InitiativeGrass();
                         Grid[initiativeGrassX, initiativeGrassY] = rabbit;
                     }
-                    if (!rabbit.Bred && rabbitCoordinates.Count == 1)
-                    {
-
-                        for (int i = 0; i < rabbitCoordinates.Count; i++)
-                        {
-                            string[] splitted = RandomCoordinateFromList(rabbitCoordinates);
-                            int rabbitPairX = int.Parse(splitted[0]);
-                            int rabbitPairY = int.Parse(splitted[1]);
-
-                            Rabbit rabbitPair = (Rabbit)Grid[rabbitPairX, rabbitPairY];
-
-                            if (!rabbitPair.Bred)
-                            {
-                                int newRabbitX;
-                                int newRabbitY;
-                                do
-                                {
-                                    newRabbitX = rnd.Next(0, X);
-                                    newRabbitY = rnd.Next(0, Y);
-                                } while (Grid[newRabbitX, newRabbitY] is Rabbit || Grid[newRabbitX, newRabbitY] is Fox);
-
-                                Grid[newRabbitX, newRabbitY] = new Rabbit(5, true, true, Color.DarkSlateGray);
-
-
-                                break;
-                            }
-
-                        }
-
-                    }
+                   
 
                 }                              
                 rabbit.Bred = true;
