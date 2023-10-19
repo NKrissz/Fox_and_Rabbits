@@ -28,34 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            tb_rows = new TextBox();
-            tb_cols = new TextBox();
             bt_generate = new Button();
             label1 = new Label();
-            label2 = new Label();
-            label3 = new Label();
             pictureBox1 = new PictureBox();
             lbl_RabbitCount = new Label();
             btn_Exit = new Button();
             lbl_rounds = new Label();
+            lbl_foxcounter = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
-            // 
-            // tb_rows
-            // 
-            tb_rows.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            tb_rows.Location = new Point(786, 334);
-            tb_rows.Name = "tb_rows";
-            tb_rows.Size = new Size(100, 23);
-            tb_rows.TabIndex = 0;
-            // 
-            // tb_cols
-            // 
-            tb_cols.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            tb_cols.Location = new Point(455, 334);
-            tb_cols.Name = "tb_cols";
-            tb_cols.Size = new Size(100, 23);
-            tb_cols.TabIndex = 1;
             // 
             // bt_generate
             // 
@@ -80,30 +61,6 @@
             label1.Size = new Size(468, 90);
             label1.TabIndex = 3;
             label1.Text = "Game of Life";
-            // 
-            // label2
-            // 
-            label2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            label2.AutoSize = true;
-            label2.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            label2.ForeColor = Color.White;
-            label2.Location = new Point(283, 334);
-            label2.Name = "label2";
-            label2.Size = new Size(166, 19);
-            label2.TabIndex = 4;
-            label2.Text = "Adja meg a sorok számát:";
-            // 
-            // label3
-            // 
-            label3.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            label3.AutoSize = true;
-            label3.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            label3.ForeColor = Color.White;
-            label3.Location = new Point(588, 334);
-            label3.Name = "label3";
-            label3.Size = new Size(192, 19);
-            label3.TabIndex = 5;
-            label3.Text = "Adja meg az oszlopok számát:";
             // 
             // pictureBox1
             // 
@@ -142,6 +99,7 @@
             // 
             lbl_rounds.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             lbl_rounds.AutoSize = true;
+            lbl_rounds.BackColor = Color.Transparent;
             lbl_rounds.ForeColor = SystemColors.ButtonFace;
             lbl_rounds.Location = new Point(941, 58);
             lbl_rounds.Name = "lbl_rounds";
@@ -150,21 +108,31 @@
             lbl_rounds.Text = "Körök száma:";
             lbl_rounds.Visible = false;
             // 
+            // lbl_foxcounter
+            // 
+            lbl_foxcounter.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            lbl_foxcounter.AutoSize = true;
+            lbl_foxcounter.BackColor = Color.Transparent;
+            lbl_foxcounter.ForeColor = SystemColors.ButtonFace;
+            lbl_foxcounter.Location = new Point(941, 92);
+            lbl_foxcounter.Name = "lbl_foxcounter";
+            lbl_foxcounter.Size = new Size(86, 15);
+            lbl_foxcounter.TabIndex = 9;
+            lbl_foxcounter.Text = "A rókák száma:";
+            lbl_foxcounter.Visible = false;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(0, 0, 64);
+            BackColor = Color.Peru;
             ClientSize = new Size(1167, 810);
+            Controls.Add(lbl_foxcounter);
             Controls.Add(lbl_rounds);
             Controls.Add(lbl_RabbitCount);
-            Controls.Add(label3);
-            Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(btn_Exit);
             Controls.Add(bt_generate);
-            Controls.Add(tb_cols);
-            Controls.Add(tb_rows);
             Controls.Add(pictureBox1);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Name = "Form1";
@@ -176,16 +144,12 @@
         }
 
         #endregion
-
-        private TextBox tb_rows;
-        private TextBox tb_cols;
         private Button bt_generate;
         private Label label1;
-        private Label label2;
-        private Label label3;
         private PictureBox pictureBox1;
         private Label lbl_RabbitCount;
         private Button btn_Exit;
         private Label lbl_rounds;
+        private Label lbl_foxcounter;
     }
 }

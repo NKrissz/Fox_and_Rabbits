@@ -19,7 +19,7 @@ namespace Fox_And_Rabbits
 
             WindowState = FormWindowState.Maximized;
 
-            Simulation sim = new(int.Parse(tb_rows.Text), int.Parse(tb_cols.Text), 15);
+            Simulation sim = new(50,50, 15);
 
 
             sim.StartGame(out Bitmap bitmap);
@@ -41,21 +41,16 @@ namespace Fox_And_Rabbits
             pictureBox1.Location = new Point(centerX, centerY);
 
             label1.Visible = false;
-            label2.Visible = false;
-            label3.Visible = false;
-            tb_cols.Visible = false;
-            tb_rows.Visible = false;
             bt_generate.Visible = false;
-
 
 
             lbl_rounds.Visible = true;
             lbl_RabbitCount.Visible = true;
+            lbl_foxcounter.Visible = true;
             int rounds = 0;
 
 
-
-            while (sim.RabbitCounter() != 0)
+            while (sim.RabbitCounter() != 0 )
             {
                 for (int i = 0; i < sim.Grid.GetLength(0); i++)
                 {
@@ -74,24 +69,23 @@ namespace Fox_And_Rabbits
 
                         pictureBox1.Image = bitmap;
 
-                        
-                    }
+
+                   }
                 }
                 sim.UpdateGrid(bitmap);
                 pictureBox1.Image = bitmap;
                 await Task.Delay(1000);
-               
+
                 sim.ResetStats();
 
 
                 rounds++;
                 lbl_rounds.Text = $"Eltelt körök: {rounds}";
                 lbl_RabbitCount.Text = $"A nyulak száma: {sim.RabbitCounter()}";
+                lbl_foxcounter.Text = $"A rókák száma: {sim.FoxCounter()}";
             }
-
-          
-
-
+            sim.UpdateGrid(bitmap);
+            pictureBox1.Image = bitmap;
         }
 
         private void Btn_Exit_Click(object sender, EventArgs e)

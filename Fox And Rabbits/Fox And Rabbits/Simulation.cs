@@ -24,7 +24,6 @@ namespace Fox_And_Rabbits
             Grid = new IEntity[x, y];
         }
 
-
         public Bitmap GenerateBitmap()
         {
             return new Bitmap(X * CellSize, Y * CellSize);
@@ -36,13 +35,6 @@ namespace Fox_And_Rabbits
 
             Graphics graphics = Graphics.FromImage(bitmap);
 
-            int[] odds = { 1,1,1,1,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,2, 2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,5, };
-            //52 db overall
-            //24 db 1   30%
-            //10 db 2   25%
-            //10 db 3   25%
-            //6 db 4    15%
-            //2 db 5    5%
 
             Color cellColor = new();
 
@@ -50,7 +42,7 @@ namespace Fox_And_Rabbits
             {
                 for (int j = 0; j < Y; j++)
                 {
-                    switch (odds[rnd.Next(1, odds.Length)])
+                    switch (rnd.Next(1, 4))
                     {
                         case 1:
                             Grid[i, j] = new InitiativeGrass();
@@ -64,21 +56,36 @@ namespace Fox_And_Rabbits
                             Grid[i, j] = new AdvancedGrass();
                             cellColor = Grid[i, j].EntityColor;
                             break;
-                        case 4:
-                            Grid[i, j] = new Rabbit(5, false, false, Color.DarkSlateGray);
-                            cellColor = Grid[i, j].EntityColor;
-                            break;
-                        case 5:
-                            Grid[i, j] = new Fox(10, false, false, Color.Red);
-                            cellColor = Grid[i, j].EntityColor;
-                            break;
-
                     }
-
 
                     SolidBrush brush = new(cellColor);
                     graphics.FillRectangle(brush, j * CellSize, i * CellSize, CellSize, CellSize);
                 }
+            }
+
+            int randX;
+            int randY;
+            for (int i = 0; i < 120; i++)
+            {
+                randX = rnd.Next(0, X);
+                randY = rnd.Next(0, Y);
+                Grid[randX, randY] = new Rabbit(5, false, false, Color.DarkSlateGray);
+                cellColor = Grid[randX, randY].EntityColor;
+
+                SolidBrush brush = new(cellColor);
+                graphics.FillRectangle(brush, randX * CellSize, randX * CellSize, CellSize, CellSize);
+
+            }
+            for (int i = 0; i < 40; i++)
+            {
+                randX = rnd.Next(0, X);
+                randY = rnd.Next(0, Y);
+                Grid[randX, randY] = new Fox(10, false, false, Color.Red);
+                cellColor = Grid[randX, randY].EntityColor;
+
+                SolidBrush brush = new(cellColor);
+                graphics.FillRectangle(brush, randX * CellSize, randX * CellSize, CellSize, CellSize);
+
             }
 
             bitmapHandler = bitmap;
@@ -271,13 +278,14 @@ namespace Fox_And_Rabbits
         {
             if (Grid[x, y] is Rabbit rabbit)
             {
-                //Rabbit rabbit = (Rabbit)Grid[x, y];
-                List<string> advancedGrassCoordinates = ReturnNeighbourCoordinates(x, y, typeof(AdvancedGrass), 1);
-                List<string> tenderGrassCoordinates = ReturnNeighbourCoordinates(x, y, typeof(TenderGrass), 1);
-                List<string> initiativeGrassCoordinates = ReturnNeighbourCoordinates(x, y, typeof(InitiativeGrass), 1);
-
                 if (!rabbit.Ate)
                 {
+
+                    List<string> advancedGrassCoordinates = ReturnNeighbourCoordinates(x, y, typeof(AdvancedGrass), 1);
+                    List<string> tenderGrassCoordinates = ReturnNeighbourCoordinates(x, y, typeof(TenderGrass), 1);
+                    List<string> initiativeGrassCoordinates = ReturnNeighbourCoordinates(x, y, typeof(InitiativeGrass), 1);
+                    List<string> rabbitCoordinates = ReturnNeighbourCoordinates(x, y, typeof(Rabbit), 1);
+
 
                     if (advancedGrassCoordinates.Count != 0)
                     {
@@ -334,41 +342,39 @@ namespace Fox_And_Rabbits
                         Grid[x, y] = new InitiativeGrass();
                         Grid[initiativeGrassX, initiativeGrassY] = rabbit;
                     }
-
-
-                }
-                List<string> rabbitCoordinates = ReturnNeighbourCoordinates(x, y, typeof(Rabbit), 1);
-                if (!rabbit.Bred && rabbitCoordinates.Count == 1)
-                {
-                    for (int i = 0; i < rabbitCoordinates.Count; i++)
+                    if (!rabbit.Bred && rabbitCoordinates.Count == 1)
                     {
-                        string[] splitted = RandomCoordinateFromList(rabbitCoordinates);
-                        int rabbitPairX = int.Parse(splitted[0]);
-                        int rabbitPairY = int.Parse(splitted[1]);
 
-                        Rabbit rabbitPair = (Rabbit)Grid[rabbitPairX, rabbitPairY];
+                        for (int i = 0; i < rabbitCoordinates.Count; i++)
+                        {
+                            string[] splitted = RandomCoordinateFromList(rabbitCoordinates);
+                            int rabbitPairX = int.Parse(splitted[0]);
+                            int rabbitPairY = int.Parse(splitted[1]);
 
-                        if (!rabbitPair.Bred)
-                        {                           
-                            int newRabbitX;
-                            int newRabbitY;
-                            do
+                            Rabbit rabbitPair = (Rabbit)Grid[rabbitPairX, rabbitPairY];
+
+                            if (!rabbitPair.Bred)
                             {
-                                newRabbitX = rnd.Next(1, Grid.GetLength(0));
-                                newRabbitY = rnd.Next(1, Grid.GetLength(1));                                
-                            } while (Grid[newRabbitX,newRabbitY] is Rabbit || Grid[newRabbitX, newRabbitY] is Fox);
+                                int newRabbitX;
+                                int newRabbitY;
+                                do
+                                {
+                                    newRabbitX = rnd.Next(0, X);
+                                    newRabbitY = rnd.Next(0, Y);
+                                } while (Grid[newRabbitX, newRabbitY] is Rabbit || Grid[newRabbitX, newRabbitY] is Fox);
 
-                            Grid[newRabbitX, newRabbitY] = new Rabbit(5, false, false, Color.DarkSlateGray);
-                            rabbitPair.Bred = true;
-                            rabbit.Bred = true;
-                            break;
+                                Grid[newRabbitX, newRabbitY] = new Rabbit(5, true, true, Color.DarkSlateGray);
+
+
+                                break;
+                            }
+
                         }
-                        
+
                     }
 
-                }
-
-
+                }                              
+                rabbit.Bred = true;
             }
 
         }
@@ -380,75 +386,78 @@ namespace Fox_And_Rabbits
                 List<string> rabbitCoordinates = ReturnNeighbourCoordinates(x, y, typeof(Rabbit), 2);
                 List<string> foxCoordinates = ReturnNeighbourCoordinates(x, y, typeof(Fox), 1);
 
-                if (!fox.Ate && rabbitCoordinates.Count != 0)
-                {
-                    string[] splitted = RandomCoordinateFromList(rabbitCoordinates);
-                    int rabbitX = int.Parse(splitted[0]);
-                    int rabbitY = int.Parse(splitted[1]);
-
-
-                    Grid[x, y] = new TenderGrass();
-                    Grid[rabbitX, rabbitY] = fox;
-
-
-                    fox.Saturation += 3;
-
-                    if (fox.Saturation > 10)
+                
+                
+                    if (!fox.Ate && rabbitCoordinates.Count != 0)
                     {
-                        fox.Saturation = 10;
-                    }
+                        string[] splitted = RandomCoordinateFromList(rabbitCoordinates);
+                        int rabbitX = int.Parse(splitted[0]);
+                        int rabbitY = int.Parse(splitted[1]);
 
-                    fox.Ate = true;
-                }
-                if (!fox.Bred && rabbitCoordinates.Count == 1)
-                {
-                    for (int i = 0; i < foxCoordinates.Count; i++)
-                    {
-                        string[] splitted = RandomCoordinateFromList(foxCoordinates);
-                        int foxPairX = int.Parse(splitted[0]);
-                        int foxPairY = int.Parse(splitted[1]);
 
-                        Fox foxPair = (Fox)Grid[foxPairX, foxPairY];
+                        Grid[x, y] = new TenderGrass();
+                        Grid[rabbitX, rabbitY] = fox;
 
-                        if (!foxPair.Bred)
+
+                        fox.Saturation += 3;
+
+                        if (fox.Saturation > 10)
                         {
-                            int newFoxX;
-                            int newFoxY;
-                            do
-                            {
-                                newFoxX = rnd.Next(1, Grid.GetLength(0));
-                                newFoxY = rnd.Next(1, Grid.GetLength(1));
-                            } while (Grid[newFoxX, newFoxY] is Rabbit || Grid[newFoxX, newFoxY] is Fox);
+                            fox.Saturation = 10;
+                        }
 
-                            Grid[newFoxX, newFoxY] = new Fox(10, false, false, Color.Red);
-                            foxPair.Bred = true;
-                            fox.Bred = true;
-                            break;
+                        fox.Ate = true;
+                    }
+                
+                else if (rabbitCoordinates.Count == 0)
+                    {
+                        List<string> advancedGrassCoordinates = ReturnNeighbourCoordinates(x, y, typeof(AdvancedGrass), 1);
+                        List<string> tenderGrassCoordinates = ReturnNeighbourCoordinates(x, y, typeof(TenderGrass), 1);
+                        List<string> initiativeGrassCoordinates = ReturnNeighbourCoordinates(x, y, typeof(InitiativeGrass), 1);
+                        List<string> GrassCoordiantes = new();
+                        GrassCoordiantes.AddRange(advancedGrassCoordinates);
+                        GrassCoordiantes.AddRange(tenderGrassCoordinates);
+                        GrassCoordiantes.AddRange(initiativeGrassCoordinates);
+
+
+                        string[] splitted = RandomCoordinateFromList(GrassCoordiantes);
+                        int grassX = int.Parse(splitted[0]);
+                        int grassY = int.Parse(splitted[1]);
+
+                        Grid[x, y] = new InitiativeGrass();
+                        Grid[grassX, grassY] = fox;
+                    if (!fox.Bred && foxCoordinates.Count == 1)
+                    {
+
+                        for (int i = 0; i < foxCoordinates.Count; i++)
+                        {
+                            splitted = RandomCoordinateFromList(foxCoordinates);
+                            int foxPairX = int.Parse(splitted[0]);
+                            int foxPairY = int.Parse(splitted[1]);
+
+                            Fox foxPair = (Fox)Grid[foxPairX, foxPairY];
+
+                            if (!foxPair.Bred)
+                            {
+                                int newFoxX;
+                                int newFoxY;
+                                do
+                                {
+                                    newFoxX = rnd.Next(0, X);
+                                    newFoxY = rnd.Next(0, Y);
+                                } while (Grid[newFoxX, newFoxY] is Rabbit || Grid[newFoxX, newFoxY] is Fox);
+
+                                Grid[newFoxX, newFoxY] = new Fox(10, true, true, Color.Red);
+
+
+                                break;
+                            }
+
                         }
 
                     }
-                }
-                else if (rabbitCoordinates.Count == 0)
-                {
-                    List<string> advancedGrassCoordinates = ReturnNeighbourCoordinates(x, y, typeof(AdvancedGrass), 1);
-                    List<string> tenderGrassCoordinates = ReturnNeighbourCoordinates(x, y, typeof(TenderGrass), 1);
-                    List<string> initiativeGrassCoordinates = ReturnNeighbourCoordinates(x, y, typeof(InitiativeGrass), 1);
-                    List<string> GrassCoordiantes = new();
-                    GrassCoordiantes.AddRange(advancedGrassCoordinates);
-                    GrassCoordiantes.AddRange(tenderGrassCoordinates);
-                    GrassCoordiantes.AddRange(initiativeGrassCoordinates);
-
-
-                    string[] splitted = RandomCoordinateFromList(GrassCoordiantes);
-                    int grassX = int.Parse(splitted[0]);
-                    int grassY = int.Parse(splitted[1]);
-
-                    Grid[x, y] = new InitiativeGrass();
-                    Grid[grassX, grassY] = fox;
-
-                }
-
-
+                }              
+                fox.Bred = true;
             }
         }
 
@@ -517,6 +526,21 @@ namespace Fox_And_Rabbits
                 }
             }
             return rabbit;
+        }
+        public int FoxCounter()
+        {
+            int fox = 0;
+            for (int i = 0; i < X; i++)
+            {
+                for (int j = 0; j < Y; j++)
+                {
+                    if (Grid[i, j] is Fox)
+                    {
+                        fox++;
+                    }
+                }
+            }
+            return fox;
         }
 
     }
