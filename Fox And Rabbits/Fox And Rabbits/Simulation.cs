@@ -1,11 +1,15 @@
 ﻿using Fox_And_Rabbits.Animals;
 using Fox_And_Rabbits.Grass;
 using Fox_And_Rabbits.Grass.Grass;
+using System.Drawing;
+
 
 namespace Fox_And_Rabbits
 {
     internal class Simulation : ISimulation
     {
+        readonly Random rnd = new();
+
         public int X { get; init; }
         public int Y { get; init; }
         public int CellSize { get; init; }
@@ -26,57 +30,463 @@ namespace Fox_And_Rabbits
             return new Bitmap(X * CellSize, Y * CellSize);
         }
 
-
         public void StartGame(out Bitmap bitmapHandler)
         {
             var bitmap = GenerateBitmap();
 
             Graphics graphics = Graphics.FromImage(bitmap);
 
-            Random rnd = new();
+            int[] odds = { 1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,5,5 };
+            //40 db overall
+            //12 db 1   30%
+            //10 db 2   25%
+            //10 db 3   25%
+            //6 db 4    15%
+            //2 db 5    5%
+
             Color cellColor = new();
 
             for (int i = 0; i < X; i++)
             {
                 for (int j = 0; j < Y; j++)
                 {
-                    switch (rnd.Next(1, 101))
+                    switch (odds[rnd.Next(1, odds.Length)])
                     {
-                        case int n when (n >= 1 && n <= 28):
+                        case 1:
                             Grid[i, j] = new InitiativeGrass();
                             cellColor = Grid[i, j].EntityColor;
                             break;
-                        case int n when (n >= 29 && n <= 56):
+                        case 2:
                             Grid[i, j] = new TenderGrass();
                             cellColor = Grid[i, j].EntityColor;
                             break;
-                        case int n when (n >= 57 && n <= 95):
+                        case 3:
                             Grid[i, j] = new AdvancedGrass();
                             cellColor = Grid[i, j].EntityColor;
                             break;
-                        case int n when (n >= 95 && n <= 98):
+                        case 4:
                             Grid[i, j] = new Rabbit(5, false, false, Color.DarkSlateGray);
                             cellColor = Grid[i, j].EntityColor;
                             break;
-                        case int n when (n >= 98 && n <= 100):
-                            Grid[i, j] = new Fox(10, false, false, Color.Red);
+                        case 5:
+                            Grid[i, j] = new Fox(5, false, false, Color.Red);
                             cellColor = Grid[i, j].EntityColor;
                             break;
-                            
+
                     }
-                    
+
+
                     SolidBrush brush = new(cellColor);
                     graphics.FillRectangle(brush, j * CellSize, i * CellSize, CellSize, CellSize);
                 }
             }
+
             bitmapHandler = bitmap;
         }
+
+        bool IsValidPosition(int x, int y)
+        {
+            return x >= 0 && x < X && y >= 0 && y < Y;
+        }
+
+        public List<string> ReturnNeighbourCoordinates(int x, int y, Type lookingfor, int num)
+        {
+            List<string> NeighbourCoordinates = new();
+
+            if (num == 1)
+            {
+                if (IsValidPosition(x - 1, y - 1) && Grid[x - 1, y - 1].GetType() == lookingfor)
+                {
+                    NeighbourCoordinates.Add($"{x - 1};{y - 1}");
+                }
+                if (IsValidPosition(x - 1, y) && Grid[x - 1, y].GetType() == lookingfor)
+                {
+                    NeighbourCoordinates.Add($"{x - 1};{y}");
+                }
+                if (IsValidPosition(x - 1, y + 1) && Grid[x - 1, y + 1].GetType() == lookingfor)
+                {
+                    NeighbourCoordinates.Add($"{x - 1};{y + 1}");
+                }
+                if (IsValidPosition(x, y - 1) && Grid[x, y - 1].GetType() == lookingfor)
+                {
+                    NeighbourCoordinates.Add($"{x};{y - 1}");
+                }
+                if (IsValidPosition(x, y + 1) && Grid[x, y + 1].GetType() == lookingfor)
+                {
+                    NeighbourCoordinates.Add($"{x};{y + 1}");
+                }
+                if (IsValidPosition(x + 1, y - 1) && Grid[x + 1, y - 1].GetType() == lookingfor)
+                {
+                    NeighbourCoordinates.Add($"{x + 1};{y - 1}");
+                }
+                if (IsValidPosition(x + 1, y) && Grid[x + 1, y].GetType() == lookingfor)
+                {
+                    NeighbourCoordinates.Add($"{x + 1};{y}");
+                }
+                if (IsValidPosition(x + 1, y + 1) && Grid[x + 1, y + 1].GetType() == lookingfor)
+                {
+                    NeighbourCoordinates.Add($"{x + 1};{y + 1}");
+                }
+                return NeighbourCoordinates;
+            }
+            else
+            {
+                if (IsValidPosition(x - 1, y - 1) && Grid[x - 1, y - 1].GetType() == lookingfor)
+                {
+                    NeighbourCoordinates.Add($"{x - 1};{y - 1}");
+                }
+                if (IsValidPosition(x - 1, y) && Grid[x - 1, y].GetType() == lookingfor)
+                {
+                    NeighbourCoordinates.Add($"{x - 1};{y}");
+                }
+                if (IsValidPosition(x - 1, y + 1) && Grid[x - 1, y + 1].GetType() == lookingfor)
+                {
+                    NeighbourCoordinates.Add($"{x - 1};{y + 1}");
+                }
+                if (IsValidPosition(x, y - 1) && Grid[x, y - 1].GetType() == lookingfor)
+                {
+                    NeighbourCoordinates.Add($"{x};{y - 1}");
+                }
+                if (IsValidPosition(x, y + 1) && Grid[x, y + 1].GetType() == lookingfor)
+                {
+                    NeighbourCoordinates.Add($"{x};{y + 1}");
+                }
+                if (IsValidPosition(x + 1, y - 1) && Grid[x + 1, y - 1].GetType() == lookingfor)
+                {
+                    NeighbourCoordinates.Add($"{x + 1};{y - 1}");
+                }
+                if (IsValidPosition(x + 1, y) && Grid[x + 1, y].GetType() == lookingfor)
+                {
+                    NeighbourCoordinates.Add($"{x + 1};{y}");
+                }
+                if (IsValidPosition(x + 1, y + 1) && Grid[x + 1, y + 1].GetType() == lookingfor)
+                {
+                    NeighbourCoordinates.Add($"{x + 1};{y + 1}");
+                }
+
+
+
+                if (IsValidPosition(x - 2, y) && Grid[x - 2, y].GetType() == lookingfor)
+                {
+                    NeighbourCoordinates.Add($"{x - 2};{y}");
+                }
+                if (IsValidPosition(x - 2, y + 1) && Grid[x - 2, y + 1].GetType() == lookingfor)
+                {
+                    NeighbourCoordinates.Add($"{x - 2};{y + 1}");
+                }
+                if (IsValidPosition(x - 2, y + 2) && Grid[x - 2, y + 2].GetType() == lookingfor)
+                {
+                    NeighbourCoordinates.Add($"{x - 2};{y + 2}");
+                }
+                if (IsValidPosition(x - 1, y + 2) && Grid[x - 1, y + 2].GetType() == lookingfor)
+                {
+                    NeighbourCoordinates.Add($"{x - 1};{y + 2}");
+                }
+                if (IsValidPosition(x, y + 2) && Grid[x, y + 2].GetType() == lookingfor)
+                {
+                    NeighbourCoordinates.Add($"{x};{y + 2}");
+                }
+                if (IsValidPosition(x + 1, y + 2) && Grid[x + 1, y + 2].GetType() == lookingfor)
+                {
+                    NeighbourCoordinates.Add($"{x + 1};{y + 2}");
+                }
+                if (IsValidPosition(x + 2, y + 2) && Grid[x + 2, y + 2].GetType() == lookingfor)
+                {
+                    NeighbourCoordinates.Add($"{x + 2};{y + 2}");
+                }
+                if (IsValidPosition(x + 2, y + 1) && Grid[x + 2, y + 1].GetType() == lookingfor)
+                {
+                    NeighbourCoordinates.Add($"{x + 2};{y + 1}");
+                }
+                if (IsValidPosition(x + 2, y) && Grid[x + 2, y].GetType() == lookingfor)
+                {
+                    NeighbourCoordinates.Add($"{x + 2};{y}");
+                }
+                if (IsValidPosition(x + 2, y - 1) && Grid[x + 2, y - 1].GetType() == lookingfor)
+                {
+                    NeighbourCoordinates.Add($"{x + 2};{y - 1}");
+                }
+                if (IsValidPosition(x + 2, y - 2) && Grid[x + 2, y - 2].GetType() == lookingfor)
+                {
+                    NeighbourCoordinates.Add($"{x + 2};{y - 2}");
+                }
+                if (IsValidPosition(x + 1, y - 2) && Grid[x + 1, y - 2].GetType() == lookingfor)
+                {
+                    NeighbourCoordinates.Add($"{x + 1};{y - 2}");
+                }
+                if (IsValidPosition(x, y - 2) && Grid[x, y - 2].GetType() == lookingfor)
+                {
+                    NeighbourCoordinates.Add($"{x};{y - 2}");
+                }
+                if (IsValidPosition(x - 1, y - 2) && Grid[x - 1, y - 2].GetType() == lookingfor)
+                {
+                    NeighbourCoordinates.Add($"{x - 1};{y - 2}");
+                }
+                if (IsValidPosition(x - 2, y - 2) && Grid[x - 2, y - 2].GetType() == lookingfor)
+                {
+                    NeighbourCoordinates.Add($"{x - 2};{y - 2}");
+                }
+                if (IsValidPosition(x - 2, y - 1) && Grid[x - 2, y - 1].GetType() == lookingfor)
+                {
+                    NeighbourCoordinates.Add($"{x - 2};{y - 1}");
+                }
+
+                return NeighbourCoordinates;
+            }
+
+        }
+
+        public static string[] RandomCoordinateFromList(List<string> list)
+        {
+
+            Random randomNum = new();
+            int randomElement = randomNum.Next(0, list.Count);
+            string[] splitted = list[randomElement].Split(';');
+            return splitted;
+
+        }
+
+        public void InitiativeGrassActions(int x, int y)
+        {
+            if (Grid[x, y] is InitiativeGrass)
+            {
+                Grid[x, y] = new TenderGrass();
+
+            }
+
+        }
+
+        public void TenderGrassActions(int x, int y)
+        {
+            if (Grid[x, y] is TenderGrass)
+            {
+                Grid[x, y] = new AdvancedGrass();
+
+            }
+
+
+        }
+
+        public void RabbitActions(int x, int y)
+        {
+            if (Grid[x, y] is Rabbit)
+            {
+                Rabbit rabbit = (Rabbit)Grid[x, y];
+
+
+                if (!rabbit.Ate)
+                {
+
+                    List<string> advancedGrassCoordinates = ReturnNeighbourCoordinates(x, y, typeof(AdvancedGrass), 1);
+                    List<string> tenderGrassCoordinates = ReturnNeighbourCoordinates(x, y, typeof(TenderGrass), 1);
+                    List<string> initiativeGrassCoordinates = ReturnNeighbourCoordinates(x, y, typeof(InitiativeGrass), 1);
+
+
+
+                    if (advancedGrassCoordinates.Count != 0)
+                    {
+                        string[] splitted = RandomCoordinateFromList(advancedGrassCoordinates);
+
+
+                        int advancedGrassX = int.Parse(splitted[0]);
+                        int advancedGrassY = int.Parse(splitted[1]);
+
+
+                        Grid[x, y] = new InitiativeGrass();
+                        Grid[advancedGrassX, advancedGrassY] = rabbit;
+
+
+                        rabbit.Saturation += 2;
+
+                        if (rabbit.Saturation > 5)
+                        {
+                            rabbit.Saturation = 5;
+                        }
+
+                        rabbit.Ate = true;
+
+                    }
+                    else if (tenderGrassCoordinates.Count != 0 && !rabbit.Ate)
+                    {
+                        string[] splitted = RandomCoordinateFromList(tenderGrassCoordinates);
+                        int tenderGrassX = int.Parse(splitted[0]);
+                        int tenderGrassY = int.Parse(splitted[1]);
+
+
+                        Grid[x, y] = new InitiativeGrass();
+                        Grid[tenderGrassX, tenderGrassY] = rabbit;
+
+                        rabbit.Saturation++;
+
+                        if (rabbit.Saturation > 5)
+                        {
+                            rabbit.Saturation = 5;
+                        }
+
+
+                        rabbit.Ate = true;
+                    }
+
+
+
+                    else if (initiativeGrassCoordinates.Count != 0)
+                    {
+                        string[] splitted = RandomCoordinateFromList(initiativeGrassCoordinates);
+                        int initiativeGrassX = int.Parse(splitted[0]);
+                        int initiativeGrassY = int.Parse(splitted[1]);
+
+                        Grid[x, y] = new InitiativeGrass();
+                        Grid[initiativeGrassX, initiativeGrassY] = rabbit;
+                    }
+
+
+                }
+                if (!rabbit.Bred)
+                {
+                    List<string> rabbitCoordinates = ReturnNeighbourCoordinates(x, y, typeof(Rabbit), 1);
+
+                    for (int i = 0; i < rabbitCoordinates.Count; i++)
+                    {
+                        string[] splitted = rabbitCoordinates[i].Split(';');
+                        int rabbitPairX = int.Parse(splitted[0]);
+                        int rabbitPairY = int.Parse(splitted[1]);
+
+                        Rabbit rabbitPair = (Rabbit)Grid[rabbitPairX, rabbitPairY];
+
+                        if (!rabbitPair.Bred)
+                        {
+                            int newRabbitX;
+                            int newRabbitY;
+                            do
+                            {
+                                newRabbitX = rnd.Next(0, X);
+                                newRabbitY = rnd.Next(0, Y);
+                            } while (Grid[newRabbitX,newRabbitY] is Rabbit || Grid[newRabbitX, newRabbitY] is Fox);
+
+
+                            rabbitPair.Bred = true;
+                            rabbit.Bred = true;
+                            break;
+                        }
+                        
+                    }
+
+                }
+
+
+            }
+
+        }
+
+        public void FoxActions(int x, int y)
+        {
+            if (Grid[x, y] is Fox fox)
+            {
+                List<string> rabbitCoordinates = ReturnNeighbourCoordinates(x, y, typeof(Rabbit), 2);
+
+                if (!fox.Ate && rabbitCoordinates.Count != 0)
+                {
+                    string[] splitted = RandomCoordinateFromList(rabbitCoordinates);
+                    int rabbitX = int.Parse(splitted[0]);
+                    int rabbitY = int.Parse(splitted[1]);
+
+
+                    Grid[x, y] = new TenderGrass();
+                    Grid[rabbitX, rabbitY] = fox;
+
+
+                    fox.Saturation += 3;
+
+                    if (fox.Saturation > 10)
+                    {
+                        fox.Saturation = 10;
+                    }
+
+                    fox.Ate = true;
+                }
+
+
+                else if (rabbitCoordinates.Count == 0)
+                {
+                    List<string> advancedGrassCoordinates = ReturnNeighbourCoordinates(x, y, typeof(AdvancedGrass), 1);
+                    List<string> tenderGrassCoordinates = ReturnNeighbourCoordinates(x, y, typeof(TenderGrass), 1);
+                    List<string> initiativeGrassCoordinates = ReturnNeighbourCoordinates(x, y, typeof(InitiativeGrass), 1);
+                    List<string> GrassCoordiantes = new();
+                    GrassCoordiantes.AddRange(advancedGrassCoordinates);
+                    GrassCoordiantes.AddRange(tenderGrassCoordinates);
+                    GrassCoordiantes.AddRange(initiativeGrassCoordinates);
+
+
+                    string[] splitted = RandomCoordinateFromList(GrassCoordiantes);
+                    int grassX = int.Parse(splitted[0]);
+                    int grassY = int.Parse(splitted[1]);
+
+                    Grid[x, y] = new InitiativeGrass();
+                    Grid[grassX, grassY] = fox;
+
+                }
+
+
+            }
+        }
+
+        public void ResetStats()
+        {
+            for (int i = 0; i < X; i++)
+            {
+                for (int j = 0; j < Y; j++)
+                {
+                    if (Grid[i, j] is Rabbit rabbit)
+                    {
+
+                        rabbit.Ate = false;
+                        rabbit.Bred = false;
+
+                        rabbit.Saturation--;
+                        if (rabbit.Saturation == 0)
+                        {
+                            Grid[i, j] = new InitiativeGrass();
+                        }
+
+                    }
+                    else if (Grid[i, j] is Fox fox)
+                    {
+                        fox.Ate = false;
+                        fox.Bred = false;
+
+
+                        fox.Saturation--;
+
+                        if (fox.Saturation == 0)
+                        {
+                            Grid[i, j] = new InitiativeGrass();
+                        }
+                    }
+
+                }
+            }
+        }
+
+        public void UpdateGrid(Bitmap bitmap)
+        {
+            Graphics graphics = Graphics.FromImage(bitmap);
+            for (int i = 0; i < X; i++)
+            {
+                for (int j = 0; j < Y; j++)
+                {
+                    Color cellColor = Grid[i, j].EntityColor;
+                    SolidBrush brush = new(cellColor);
+                    graphics.FillRectangle(brush, j * CellSize, i * CellSize, CellSize, CellSize);
+                }
+            }
+        }
+
         public int RabbitCounter()
         {
             int rabbit = 0;
-            for (int i = 0; i < Grid.GetLength(0); i++)
+            for (int i = 0; i < X; i++)
             {
-                for (int j = 0; j < Grid.GetLength(1); j++)
+                for (int j = 0; j < Y; j++)
                 {
                     if (Grid[i, j] is Rabbit)
                     {
@@ -86,113 +496,6 @@ namespace Fox_And_Rabbits
             }
             return rabbit;
         }
-
-
-
-        public void PassageOfTime(Bitmap bitmap)
-        {
-            for (int i = 0; i < Grid.GetLength(0); i++)
-            {
-                for (int j = 0; j < Grid.GetLength(1); j++)
-                {
-                    if (Grid[i, j] is InitiativeGrass)
-                    {
-                        Grid[i, j] = new TenderGrass();
-                    }
-                    else if (Grid[i, j] is TenderGrass)
-                    {
-                        Grid[i, j] = new AdvancedGrass();
-                    }
-                    else if (Grid[i, j] is Rabbit)
-                    {
-                        Rabbit rabbit = (Rabbit)Grid[i, j];
-                        Random randomNum = new Random();
-                        int[] dx = { -1, 0, 1, -1, 1, -1, 0, 1 };
-                        int[] dy = { -1, -1, -1, 0, 0, 1, 1, 1 };
-
-                        int advancedgrassX = -1, advancedgrassY = -1;
-                        int tendergrassX = -1, tendergrassY = -1;
-                        bool rabbitfound = false;
-
-                        for (int k = 0; k < 8; k++)
-                        {
-                            int newX = i + dx[randomNum.Next(0,8)];
-                            int newY = j + dy[randomNum.Next(0, 8)];
-                            if (IsValidPosition(newX, newY))
-                            {
-                                if (Grid[newX, newY] is AdvancedGrass)
-                                {
-                                    advancedgrassX = newX;
-                                    advancedgrassY = newY;
-                                }
-                                else if (Grid[newX, newY] is TenderGrass)
-                                {
-                                    tendergrassX = newX;
-                                    tendergrassY = newY;
-                                }else if (Grid[newX, newY] is Rabbit)
-                                {
-                                    rabbitfound = true;
-                                }
-                            }
-                        }
-                        if (advancedgrassX != -1 && rabbit.Saturation <= 3)
-                        {
-                            Grid[i, j] = new TenderGrass();
-                            Grid[advancedgrassX, advancedgrassY] = rabbit;
-                            rabbit.Saturation += 2;
-                        }else if (tendergrassX != -1 && rabbit.Saturation <= 3)
-                        {
-                            Grid[i, j] = new InitiativeGrass();
-                            Grid[tendergrassX, tendergrassY] = rabbit;
-                            rabbit.Saturation += 1;
-                        }
-                        int randX;
-                        int randY;
-                        do
-                        {
-                            randX = randomNum.Next(0, Grid.GetLength(0));
-                            randY = randomNum.Next(0, Grid.GetLength(1));
-                        } while (Grid[randX, randY] is Fox);
-                        if (rabbitfound && !rabbit.Bred)
-                        { 
-                                Grid[randX,randY] = new Rabbit(5, false, true, Color.DarkSlateGray);
-                                rabbit.Bred = true;
-                        }
-                        bool IsValidPosition(int x, int y)
-                        {
-                            return x >= 0 && x < Grid.GetLength(0) && y >= 0 && y < Grid.GetLength(1);
-                        }
-                        rabbit.Saturation --;
-                        rabbit.Bred = false;
-                        if (rabbit.Saturation == 0)
-                        {
-                            Grid[i, j] = new InitiativeGrass();
-                        }
-                    }
-                    else if (Grid[i, j] is Fox)
-                    {
-                        Fox fox = (Fox)Grid[i,j];
-                        Random randomNum = new Random();
-                    }
-                }
-            }
-            UpdateGrid(bitmap);
-        }
-
-        public void UpdateGrid(Bitmap bitmap)
-        {
-            Graphics graphics = Graphics.FromImage(bitmap);
-            for (int i = 0; i < Grid.GetLength(0); i++)
-            {
-                for (int j = 0; j < Grid.GetLength(1); j++)
-                {
-                    Color cellColor = Grid[i, j].EntityColor;
-                    SolidBrush brush = new(cellColor);
-                    graphics.FillRectangle(brush, j * CellSize, i * CellSize, CellSize, CellSize);
-                }
-            }
-        }
-
 
     }
 }

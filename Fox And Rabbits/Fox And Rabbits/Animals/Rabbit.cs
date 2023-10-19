@@ -2,6 +2,7 @@
 {
     internal class Rabbit : Animal
     {
+        
 
         public Rabbit(int saturation, bool ate, bool bred, Color entityColor) : base(saturation, ate, bred, entityColor)
         {

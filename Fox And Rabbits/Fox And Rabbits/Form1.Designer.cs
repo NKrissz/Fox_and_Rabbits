@@ -61,7 +61,7 @@
             // 
             bt_generate.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             bt_generate.Font = new Font("Segoe UI", 27.75F, FontStyle.Bold, GraphicsUnit.Point);
-            bt_generate.Location = new Point(489, 484);
+            bt_generate.Location = new Point(471, 415);
             bt_generate.Name = "bt_generate";
             bt_generate.Size = new Size(244, 75);
             bt_generate.TabIndex = 2;
@@ -128,7 +128,7 @@
             // 
             // btn_Exit
             // 
-            btn_Exit.Anchor = AnchorStyles.Right;
+            btn_Exit.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btn_Exit.Font = new Font("Segoe UI", 27.75F, FontStyle.Bold, GraphicsUnit.Point);
             btn_Exit.Location = new Point(911, 723);
             btn_Exit.Name = "btn_Exit";
@@ -149,7 +149,6 @@
             lbl_rounds.TabIndex = 8;
             lbl_rounds.Text = "Körök száma:";
             lbl_rounds.Visible = false;
-            lbl_rounds.Click += label4_Click;
             // 
             // Form1
             // 

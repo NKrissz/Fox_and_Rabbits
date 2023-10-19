@@ -2,7 +2,7 @@
 {
     internal class Animal : IEntity
     {
-        public Animal(int saturation, bool ate, bool bred, Color entityColor)
+        public Animal(int saturation, bool ate, bool bred, Color entityColor )
         {
             Saturation = saturation;
             Ate = ate;
@@ -12,9 +12,10 @@
 
         public Animal() { }
 
+   
 
         public int Saturation { get; set; }
-        public bool Ate { get; init; } = false;
+        public bool Ate { get; set; } = false;
         public bool Bred { get; set; }
         public Color EntityColor { get; init; }
     }

@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\odori\\Fox_and_Rabbits\\Fox And Rabbits\\Fox And Rabbits\\Fox And Rabbits.csproj": {}
+    "C:\\Users\\Bálint\\Desktop\\Fox_and_Rabbits\\Fox And Rabbits\\Fox And Rabbits\\Fox And Rabbits.csproj": {}
   },
   "projects": {
-    "C:\\Users\\odori\\Fox_and_Rabbits\\Fox And Rabbits\\Fox And Rabbits\\Fox And Rabbits.csproj": {
+    "C:\\Users\\Bálint\\Desktop\\Fox_and_Rabbits\\Fox And Rabbits\\Fox And Rabbits\\Fox And Rabbits.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\odori\\Fox_and_Rabbits\\Fox And Rabbits\\Fox And Rabbits\\Fox And Rabbits.csproj",
+        "projectUniqueName": "C:\\Users\\Bálint\\Desktop\\Fox_and_Rabbits\\Fox And Rabbits\\Fox And Rabbits\\Fox And Rabbits.csproj",
         "projectName": "Fox And Rabbits",
-        "projectPath": "C:\\Users\\odori\\Fox_and_Rabbits\\Fox And Rabbits\\Fox And Rabbits\\Fox And Rabbits.csproj",
-        "packagesPath": "C:\\Users\\odori\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\odori\\Fox_and_Rabbits\\Fox And Rabbits\\Fox And Rabbits\\obj\\",
+        "projectPath": "C:\\Users\\Bálint\\Desktop\\Fox_and_Rabbits\\Fox And Rabbits\\Fox And Rabbits\\Fox And Rabbits.csproj",
+        "packagesPath": "C:\\Users\\Bálint\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Bálint\\Desktop\\Fox_and_Rabbits\\Fox And Rabbits\\Fox And Rabbits\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\odori\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Bálint\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
