@@ -36,9 +36,9 @@ namespace Fox_And_Rabbits
 
             Graphics graphics = Graphics.FromImage(bitmap);
 
-            int[] odds = { 1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,5,5 };
-            //40 db overall
-            //12 db 1   30%
+            int[] odds = { 1,1,1,1,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,2, 2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,5, };
+            //52 db overall
+            //24 db 1   30%
             //10 db 2   25%
             //10 db 3   25%
             //6 db 4    15%
@@ -69,7 +69,7 @@ namespace Fox_And_Rabbits
                             cellColor = Grid[i, j].EntityColor;
                             break;
                         case 5:
-                            Grid[i, j] = new Fox(5, false, false, Color.Red);
+                            Grid[i, j] = new Fox(10, false, false, Color.Red);
                             cellColor = Grid[i, j].EntityColor;
                             break;
 
@@ -269,19 +269,15 @@ namespace Fox_And_Rabbits
 
         public void RabbitActions(int x, int y)
         {
-            if (Grid[x, y] is Rabbit)
+            if (Grid[x, y] is Rabbit rabbit)
             {
-                Rabbit rabbit = (Rabbit)Grid[x, y];
-
+                //Rabbit rabbit = (Rabbit)Grid[x, y];
+                List<string> advancedGrassCoordinates = ReturnNeighbourCoordinates(x, y, typeof(AdvancedGrass), 1);
+                List<string> tenderGrassCoordinates = ReturnNeighbourCoordinates(x, y, typeof(TenderGrass), 1);
+                List<string> initiativeGrassCoordinates = ReturnNeighbourCoordinates(x, y, typeof(InitiativeGrass), 1);
 
                 if (!rabbit.Ate)
                 {
-
-                    List<string> advancedGrassCoordinates = ReturnNeighbourCoordinates(x, y, typeof(AdvancedGrass), 1);
-                    List<string> tenderGrassCoordinates = ReturnNeighbourCoordinates(x, y, typeof(TenderGrass), 1);
-                    List<string> initiativeGrassCoordinates = ReturnNeighbourCoordinates(x, y, typeof(InitiativeGrass), 1);
-
-
 
                     if (advancedGrassCoordinates.Count != 0)
                     {
@@ -341,29 +337,28 @@ namespace Fox_And_Rabbits
 
 
                 }
-                if (!rabbit.Bred)
+                List<string> rabbitCoordinates = ReturnNeighbourCoordinates(x, y, typeof(Rabbit), 1);
+                if (!rabbit.Bred && rabbitCoordinates.Count == 1)
                 {
-                    List<string> rabbitCoordinates = ReturnNeighbourCoordinates(x, y, typeof(Rabbit), 1);
-
                     for (int i = 0; i < rabbitCoordinates.Count; i++)
                     {
-                        string[] splitted = rabbitCoordinates[i].Split(';');
+                        string[] splitted = RandomCoordinateFromList(rabbitCoordinates);
                         int rabbitPairX = int.Parse(splitted[0]);
                         int rabbitPairY = int.Parse(splitted[1]);
 
                         Rabbit rabbitPair = (Rabbit)Grid[rabbitPairX, rabbitPairY];
 
                         if (!rabbitPair.Bred)
-                        {
+                        {                           
                             int newRabbitX;
                             int newRabbitY;
                             do
                             {
-                                newRabbitX = rnd.Next(0, X);
-                                newRabbitY = rnd.Next(0, Y);
+                                newRabbitX = rnd.Next(1, Grid.GetLength(0));
+                                newRabbitY = rnd.Next(1, Grid.GetLength(1));                                
                             } while (Grid[newRabbitX,newRabbitY] is Rabbit || Grid[newRabbitX, newRabbitY] is Fox);
 
-
+                            Grid[newRabbitX, newRabbitY] = new Rabbit(5, false, false, Color.DarkSlateGray);
                             rabbitPair.Bred = true;
                             rabbit.Bred = true;
                             break;
@@ -383,6 +378,7 @@ namespace Fox_And_Rabbits
             if (Grid[x, y] is Fox fox)
             {
                 List<string> rabbitCoordinates = ReturnNeighbourCoordinates(x, y, typeof(Rabbit), 2);
+                List<string> foxCoordinates = ReturnNeighbourCoordinates(x, y, typeof(Fox), 1);
 
                 if (!fox.Ate && rabbitCoordinates.Count != 0)
                 {
@@ -404,8 +400,34 @@ namespace Fox_And_Rabbits
 
                     fox.Ate = true;
                 }
+                if (!fox.Bred && rabbitCoordinates.Count == 1)
+                {
+                    for (int i = 0; i < foxCoordinates.Count; i++)
+                    {
+                        string[] splitted = RandomCoordinateFromList(foxCoordinates);
+                        int foxPairX = int.Parse(splitted[0]);
+                        int foxPairY = int.Parse(splitted[1]);
 
+                        Fox foxPair = (Fox)Grid[foxPairX, foxPairY];
 
+                        if (!foxPair.Bred)
+                        {
+                            int newFoxX;
+                            int newFoxY;
+                            do
+                            {
+                                newFoxX = rnd.Next(1, Grid.GetLength(0));
+                                newFoxY = rnd.Next(1, Grid.GetLength(1));
+                            } while (Grid[newFoxX, newFoxY] is Rabbit || Grid[newFoxX, newFoxY] is Fox);
+
+                            Grid[newFoxX, newFoxY] = new Fox(10, false, false, Color.Red);
+                            foxPair.Bred = true;
+                            fox.Bred = true;
+                            break;
+                        }
+
+                    }
+                }
                 else if (rabbitCoordinates.Count == 0)
                 {
                     List<string> advancedGrassCoordinates = ReturnNeighbourCoordinates(x, y, typeof(AdvancedGrass), 1);
