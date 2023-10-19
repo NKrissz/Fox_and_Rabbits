@@ -1,7 +1,6 @@
 ﻿using Fox_And_Rabbits.Animals;
 using Fox_And_Rabbits.Grass;
 using Fox_And_Rabbits.Grass.Grass;
-using System.Drawing;
 
 
 namespace Fox_And_Rabbits
