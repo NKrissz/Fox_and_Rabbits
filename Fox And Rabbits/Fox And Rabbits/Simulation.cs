@@ -95,151 +95,29 @@ namespace Fox_And_Rabbits
             return x >= 0 && x < X && y >= 0 && y < Y;
         }
 
-        public List<string> ReturnNeighbourCoordinates(int x, int y, Type lookingfor, int num)
+        public List<string> ReturnNeighbourCoordinates(int x, int y, Type lookingfor, int radius)
         {
             List<string> NeighbourCoordinates = new();
 
-            if (num == 1)
+            for (int i = -radius; i <= radius; i++)
             {
-                if (IsValidPosition(x - 1, y - 1) && Grid[x - 1, y - 1].GetType() == lookingfor)
+                for (int j = -radius; j <= radius; j++)
                 {
-                    NeighbourCoordinates.Add($"{x - 1};{y - 1}");
-                }
-                if (IsValidPosition(x - 1, y) && Grid[x - 1, y].GetType() == lookingfor)
-                {
-                    NeighbourCoordinates.Add($"{x - 1};{y}");
-                }
-                if (IsValidPosition(x - 1, y + 1) && Grid[x - 1, y + 1].GetType() == lookingfor)
-                {
-                    NeighbourCoordinates.Add($"{x - 1};{y + 1}");
-                }
-                if (IsValidPosition(x, y - 1) && Grid[x, y - 1].GetType() == lookingfor)
-                {
-                    NeighbourCoordinates.Add($"{x};{y - 1}");
-                }
-                if (IsValidPosition(x, y + 1) && Grid[x, y + 1].GetType() == lookingfor)
-                {
-                    NeighbourCoordinates.Add($"{x};{y + 1}");
-                }
-                if (IsValidPosition(x + 1, y - 1) && Grid[x + 1, y - 1].GetType() == lookingfor)
-                {
-                    NeighbourCoordinates.Add($"{x + 1};{y - 1}");
-                }
-                if (IsValidPosition(x + 1, y) && Grid[x + 1, y].GetType() == lookingfor)
-                {
-                    NeighbourCoordinates.Add($"{x + 1};{y}");
-                }
-                if (IsValidPosition(x + 1, y + 1) && Grid[x + 1, y + 1].GetType() == lookingfor)
-                {
-                    NeighbourCoordinates.Add($"{x + 1};{y + 1}");
-                }
-                return NeighbourCoordinates;
-            }
-            else
-            {
-                if (IsValidPosition(x - 1, y - 1) && Grid[x - 1, y - 1].GetType() == lookingfor)
-                {
-                    NeighbourCoordinates.Add($"{x - 1};{y - 1}");
-                }
-                if (IsValidPosition(x - 1, y) && Grid[x - 1, y].GetType() == lookingfor)
-                {
-                    NeighbourCoordinates.Add($"{x - 1};{y}");
-                }
-                if (IsValidPosition(x - 1, y + 1) && Grid[x - 1, y + 1].GetType() == lookingfor)
-                {
-                    NeighbourCoordinates.Add($"{x - 1};{y + 1}");
-                }
-                if (IsValidPosition(x, y - 1) && Grid[x, y - 1].GetType() == lookingfor)
-                {
-                    NeighbourCoordinates.Add($"{x};{y - 1}");
-                }
-                if (IsValidPosition(x, y + 1) && Grid[x, y + 1].GetType() == lookingfor)
-                {
-                    NeighbourCoordinates.Add($"{x};{y + 1}");
-                }
-                if (IsValidPosition(x + 1, y - 1) && Grid[x + 1, y - 1].GetType() == lookingfor)
-                {
-                    NeighbourCoordinates.Add($"{x + 1};{y - 1}");
-                }
-                if (IsValidPosition(x + 1, y) && Grid[x + 1, y].GetType() == lookingfor)
-                {
-                    NeighbourCoordinates.Add($"{x + 1};{y}");
-                }
-                if (IsValidPosition(x + 1, y + 1) && Grid[x + 1, y + 1].GetType() == lookingfor)
-                {
-                    NeighbourCoordinates.Add($"{x + 1};{y + 1}");
-                }
+                    if (i != 0 && j != 0)
+                    {
+                        int NeighbourX = x + i;
+                        int NeighbourY = y + j;
 
+                        if (IsValidPosition(NeighbourX, NeighbourY) && Grid[NeighbourX, NeighbourY].GetType() == lookingfor)
+                        {
+                            NeighbourCoordinates.Add($"{NeighbourX};{NeighbourY}");
+                        }
+                    }
 
-
-                if (IsValidPosition(x - 2, y) && Grid[x - 2, y].GetType() == lookingfor)
-                {
-                    NeighbourCoordinates.Add($"{x - 2};{y}");
                 }
-                if (IsValidPosition(x - 2, y + 1) && Grid[x - 2, y + 1].GetType() == lookingfor)
-                {
-                    NeighbourCoordinates.Add($"{x - 2};{y + 1}");
-                }
-                if (IsValidPosition(x - 2, y + 2) && Grid[x - 2, y + 2].GetType() == lookingfor)
-                {
-                    NeighbourCoordinates.Add($"{x - 2};{y + 2}");
-                }
-                if (IsValidPosition(x - 1, y + 2) && Grid[x - 1, y + 2].GetType() == lookingfor)
-                {
-                    NeighbourCoordinates.Add($"{x - 1};{y + 2}");
-                }
-                if (IsValidPosition(x, y + 2) && Grid[x, y + 2].GetType() == lookingfor)
-                {
-                    NeighbourCoordinates.Add($"{x};{y + 2}");
-                }
-                if (IsValidPosition(x + 1, y + 2) && Grid[x + 1, y + 2].GetType() == lookingfor)
-                {
-                    NeighbourCoordinates.Add($"{x + 1};{y + 2}");
-                }
-                if (IsValidPosition(x + 2, y + 2) && Grid[x + 2, y + 2].GetType() == lookingfor)
-                {
-                    NeighbourCoordinates.Add($"{x + 2};{y + 2}");
-                }
-                if (IsValidPosition(x + 2, y + 1) && Grid[x + 2, y + 1].GetType() == lookingfor)
-                {
-                    NeighbourCoordinates.Add($"{x + 2};{y + 1}");
-                }
-                if (IsValidPosition(x + 2, y) && Grid[x + 2, y].GetType() == lookingfor)
-                {
-                    NeighbourCoordinates.Add($"{x + 2};{y}");
-                }
-                if (IsValidPosition(x + 2, y - 1) && Grid[x + 2, y - 1].GetType() == lookingfor)
-                {
-                    NeighbourCoordinates.Add($"{x + 2};{y - 1}");
-                }
-                if (IsValidPosition(x + 2, y - 2) && Grid[x + 2, y - 2].GetType() == lookingfor)
-                {
-                    NeighbourCoordinates.Add($"{x + 2};{y - 2}");
-                }
-                if (IsValidPosition(x + 1, y - 2) && Grid[x + 1, y - 2].GetType() == lookingfor)
-                {
-                    NeighbourCoordinates.Add($"{x + 1};{y - 2}");
-                }
-                if (IsValidPosition(x, y - 2) && Grid[x, y - 2].GetType() == lookingfor)
-                {
-                    NeighbourCoordinates.Add($"{x};{y - 2}");
-                }
-                if (IsValidPosition(x - 1, y - 2) && Grid[x - 1, y - 2].GetType() == lookingfor)
-                {
-                    NeighbourCoordinates.Add($"{x - 1};{y - 2}");
-                }
-                if (IsValidPosition(x - 2, y - 2) && Grid[x - 2, y - 2].GetType() == lookingfor)
-                {
-                    NeighbourCoordinates.Add($"{x - 2};{y - 2}");
-                }
-                if (IsValidPosition(x - 2, y - 1) && Grid[x - 2, y - 1].GetType() == lookingfor)
-                {
-                    NeighbourCoordinates.Add($"{x - 2};{y - 1}");
-                }
-
-                return NeighbourCoordinates;
             }
 
+            return NeighbourCoordinates;
         }
 
         public static string[] RandomCoordinateFromList(List<string> list)
@@ -397,7 +275,7 @@ namespace Fox_And_Rabbits
                         int rabbitY = int.Parse(splitted[1]);
 
 
-                        Grid[x, y] = new TenderGrass();
+                        Grid[x, y] = new AdvancedGrass();
                         Grid[rabbitX, rabbitY] = fox;
 
 
@@ -426,7 +304,7 @@ namespace Fox_And_Rabbits
                         int grassX = int.Parse(splitted[0]);
                         int grassY = int.Parse(splitted[1]);
 
-                        Grid[x, y] = new InitiativeGrass();
+                        Grid[x, y] = new AdvancedGrass();
                         Grid[grassX, grassY] = fox;
                     if (!fox.Bred && foxCoordinates.Count == 1)
                     {
